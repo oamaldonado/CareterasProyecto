@@ -17,7 +17,6 @@ namespace Carreteras
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_empleados()
         {
-            this.tb_usuarios = new HashSet<tb_usuarios>();
             this.tb_empleadosXusuarios = new HashSet<tb_empleadosXusuarios>();
         }
     
@@ -34,10 +33,8 @@ namespace Carreteras
     
         public virtual tb_ciudades tb_ciudades { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_usuarios> tb_usuarios { get; set; }
-        public virtual tb_usuarios tb_usuarios1 { get; set; }
-        public virtual tb_usuarios tb_usuarios2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_empleadosXusuarios> tb_empleadosXusuarios { get; set; }
+        public virtual tb_usuarios tb_usuarios { get; set; }
+        public virtual tb_usuarios tb_usuarios1 { get; set; }
     }
 }

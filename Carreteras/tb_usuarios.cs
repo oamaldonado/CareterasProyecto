@@ -29,19 +29,19 @@ namespace Carreteras
             this.tb_departamentos1 = new HashSet<tb_departamentos>();
             this.tb_pantallas = new HashSet<tb_pantallas>();
             this.tb_pantallas1 = new HashSet<tb_pantallas>();
+            this.tb_roles = new HashSet<tb_roles>();
             this.tb_roles1 = new HashSet<tb_roles>();
-            this.tb_roles2 = new HashSet<tb_roles>();
             this.tb_tramos = new HashSet<tb_tramos>();
             this.tb_tramos1 = new HashSet<tb_tramos>();
             this.tb_categorias = new HashSet<tb_categorias>();
             this.tb_categorias1 = new HashSet<tb_categorias>();
+            this.tb_empleados = new HashSet<tb_empleados>();
             this.tb_empleados1 = new HashSet<tb_empleados>();
-            this.tb_empleados2 = new HashSet<tb_empleados>();
-            this.tb_usuarios1 = new HashSet<tb_usuarios>();
-            this.tb_usuarios11 = new HashSet<tb_usuarios>();
             this.tb_empleadosXusuarios = new HashSet<tb_empleadosXusuarios>();
             this.tb_empleadosXusuarios1 = new HashSet<tb_empleadosXusuarios>();
             this.tb_empleadosXusuarios2 = new HashSet<tb_empleadosXusuarios>();
+            this.tb_usuarios1 = new HashSet<tb_usuarios>();
+            this.tb_usuarios11 = new HashSet<tb_usuarios>();
             this.tb_usuariosXroles = new HashSet<tb_usuariosXroles>();
             this.tb_usuariosXroles1 = new HashSet<tb_usuariosXroles>();
             this.tb_usuariosXroles2 = new HashSet<tb_usuariosXroles>();
@@ -50,8 +50,6 @@ namespace Carreteras
         public string usu_id { get; set; }
         public string usu_descripcion { get; set; }
         public string usu_password { get; set; }
-        public string emp_id { get; set; }
-        public string rol_id { get; set; }
         public string usu_usuario_crea { get; set; }
         public Nullable<System.DateTime> usu_fecha_crea { get; set; }
         public string usu_usuario_modifica { get; set; }
@@ -82,11 +80,10 @@ namespace Carreteras
         public virtual ICollection<tb_pantallas> tb_pantallas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_pantallas> tb_pantallas1 { get; set; }
-        public virtual tb_roles tb_roles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_roles> tb_roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_roles> tb_roles1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_roles> tb_roles2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_tramos> tb_tramos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -95,23 +92,22 @@ namespace Carreteras
         public virtual ICollection<tb_categorias> tb_categorias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_categorias> tb_categorias1 { get; set; }
-        public virtual tb_empleados tb_empleados { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_empleados> tb_empleados { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_empleados> tb_empleados1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_empleados> tb_empleados2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_usuarios> tb_usuarios1 { get; set; }
-        public virtual tb_usuarios tb_usuarios2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_usuarios> tb_usuarios11 { get; set; }
-        public virtual tb_usuarios tb_usuarios3 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_empleadosXusuarios> tb_empleadosXusuarios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_empleadosXusuarios> tb_empleadosXusuarios1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_empleadosXusuarios> tb_empleadosXusuarios2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_usuarios> tb_usuarios1 { get; set; }
+        public virtual tb_usuarios tb_usuarios2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_usuarios> tb_usuarios11 { get; set; }
+        public virtual tb_usuarios tb_usuarios3 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_usuariosXroles> tb_usuariosXroles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

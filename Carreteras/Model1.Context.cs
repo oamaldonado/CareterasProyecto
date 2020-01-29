@@ -38,8 +38,8 @@ namespace Carreteras
         public virtual DbSet<tb_tramos> tb_tramos { get; set; }
         public virtual DbSet<tb_categorias> tb_categorias { get; set; }
         public virtual DbSet<tb_empleados> tb_empleados { get; set; }
-        public virtual DbSet<tb_usuarios> tb_usuarios { get; set; }
         public virtual DbSet<tb_empleadosXusuarios> tb_empleadosXusuarios { get; set; }
+        public virtual DbSet<tb_usuarios> tb_usuarios { get; set; }
         public virtual DbSet<tb_usuariosXroles> tb_usuariosXroles { get; set; }
     
         public virtual ObjectResult<string> PA_Activarciudades(string ciuid)

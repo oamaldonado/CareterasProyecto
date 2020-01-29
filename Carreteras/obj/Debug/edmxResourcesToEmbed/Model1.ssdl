@@ -149,6 +149,18 @@
     <Property Name="emp_fecha_modifica" Type="datetime" />
     <Property Name="emp_estado" Type="bit" />
   </EntityType>
+  <EntityType Name="tb_empleadosXusuarios">
+    <Key>
+      <PropertyRef Name="emp_id" />
+      <PropertyRef Name="usu_id" />
+    </Key>
+    <Property Name="emp_id" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="usu_id" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="emusu_usuario_crea" Type="nvarchar" MaxLength="20" />
+    <Property Name="emusu_fecha_crea" Type="datetime" />
+    <Property Name="emusu_usuario_modifica" Type="nvarchar" MaxLength="20" />
+    <Property Name="emusu_fecha_modifica" Type="datetime" />
+  </EntityType>
   <EntityType Name="tb_usuarios">
     <Key>
       <PropertyRef Name="usu_id" />
@@ -156,13 +168,23 @@
     <Property Name="usu_id" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="usu_descripcion" Type="nvarchar" MaxLength="100" />
     <Property Name="usu_password" Type="nvarchar(max)" />
-    <Property Name="emp_id" Type="nvarchar" MaxLength="20" />
-    <Property Name="rol_id" Type="nvarchar" MaxLength="20" />
     <Property Name="usu_usuario_crea" Type="nvarchar" MaxLength="20" />
     <Property Name="usu_fecha_crea" Type="datetime" />
     <Property Name="usu_usuario_modifica" Type="nvarchar" MaxLength="20" />
     <Property Name="usu_fecha_modifica" Type="datetime" />
     <Property Name="usu_estado" Type="bit" />
+  </EntityType>
+  <EntityType Name="tb_usuariosXroles">
+    <Key>
+      <PropertyRef Name="usu_id" />
+      <PropertyRef Name="rol_id" />
+    </Key>
+    <Property Name="usu_id" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="rol_id" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="usurol_usuario_crea" Type="nvarchar" MaxLength="20" />
+    <Property Name="usurol_fecha_crea" Type="datetime" />
+    <Property Name="usurol_usuario_modifica" Type="nvarchar" MaxLength="20" />
+    <Property Name="usurol_fecha_modifica" Type="datetime" />
   </EntityType>
   <Association Name="FK_GRAL_tb_carreteras_GRAL_tb_carreterasXciudades_car_id">
     <End Role="tb_carreteras" Type="Self.tb_carreteras" Multiplicity="1" />
@@ -272,26 +294,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GRAL_tb_roles_PERSON_tb_empleados_emp_id">
-    <End Role="tb_empleados" Type="Self.tb_empleados" Multiplicity="0..1" />
-    <End Role="tb_usuarios" Type="Self.tb_usuarios" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tb_empleados">
-        <PropertyRef Name="emp_id" />
-      </Principal>
-      <Dependent Role="tb_usuarios">
-        <PropertyRef Name="emp_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GRAL_tb_roles_PERSON_tb_usuarios_rol_id">
-    <End Role="tb_roles" Type="Self.tb_roles" Multiplicity="0..1" />
-    <End Role="tb_usuarios" Type="Self.tb_usuarios" Multiplicity="*" />
+  <Association Name="FK_GRAL_tb_roles_PERSON_tb_usuariosXroles_rol_id">
+    <End Role="tb_roles" Type="Self.tb_roles" Multiplicity="1" />
+    <End Role="tb_usuariosXroles" Type="Self.tb_usuariosXroles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_roles">
         <PropertyRef Name="rol_id" />
       </Principal>
-      <Dependent Role="tb_usuarios">
+      <Dependent Role="tb_usuariosXroles">
         <PropertyRef Name="rol_id" />
       </Dependent>
     </ReferentialConstraint>
@@ -305,6 +315,30 @@
       </Principal>
       <Dependent Role="tb_comunas">
         <PropertyRef Name="tra_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERSON_tb_empleados_PERSON_tb_empleadosXusuarios_emp_id">
+    <End Role="tb_empleados" Type="Self.tb_empleados" Multiplicity="1" />
+    <End Role="tb_empleadosXusuarios" Type="Self.tb_empleadosXusuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_empleados">
+        <PropertyRef Name="emp_id" />
+      </Principal>
+      <Dependent Role="tb_empleadosXusuarios">
+        <PropertyRef Name="emp_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERSON_tb_empleados_PERSON_tb_usuarios_usu_id">
+    <End Role="tb_usuarios" Type="Self.tb_usuarios" Multiplicity="1" />
+    <End Role="tb_empleadosXusuarios" Type="Self.tb_empleadosXusuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuarios">
+        <PropertyRef Name="usu_id" />
+      </Principal>
+      <Dependent Role="tb_empleadosXusuarios">
+        <PropertyRef Name="usu_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -548,6 +582,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PERSON_tb_usuarios_PERSON_tb_empleadosXusuarios_emusu_usuario_crea">
+    <End Role="tb_usuarios" Type="Self.tb_usuarios" Multiplicity="0..1" />
+    <End Role="tb_empleadosXusuarios" Type="Self.tb_empleadosXusuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuarios">
+        <PropertyRef Name="usu_id" />
+      </Principal>
+      <Dependent Role="tb_empleadosXusuarios">
+        <PropertyRef Name="emusu_usuario_crea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERSON_tb_usuarios_PERSON_tb_empleadosXusuarios_emusu_usuario_modifica">
+    <End Role="tb_usuarios" Type="Self.tb_usuarios" Multiplicity="0..1" />
+    <End Role="tb_empleadosXusuarios" Type="Self.tb_empleadosXusuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuarios">
+        <PropertyRef Name="usu_id" />
+      </Principal>
+      <Dependent Role="tb_empleadosXusuarios">
+        <PropertyRef Name="emusu_usuario_modifica" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PERSON_tb_usuarios_PERSON_tb_usuarios_usu_usuario_crea">
     <End Role="tb_usuarios" Type="Self.tb_usuarios" Multiplicity="0..1" />
     <End Role="tb_usuarios1" Type="Self.tb_usuarios" Multiplicity="*" />
@@ -572,6 +630,187 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PERSON_tb_usuarios_PERSON_tb_usuariosXroles_usu_id">
+    <End Role="tb_usuarios" Type="Self.tb_usuarios" Multiplicity="1" />
+    <End Role="tb_usuariosXroles" Type="Self.tb_usuariosXroles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuarios">
+        <PropertyRef Name="usu_id" />
+      </Principal>
+      <Dependent Role="tb_usuariosXroles">
+        <PropertyRef Name="usu_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERSON_tb_usuarios_PERSON_tb_usuariosXroles_usurol_usuario_crea">
+    <End Role="tb_usuarios" Type="Self.tb_usuarios" Multiplicity="0..1" />
+    <End Role="tb_usuariosXroles" Type="Self.tb_usuariosXroles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuarios">
+        <PropertyRef Name="usu_id" />
+      </Principal>
+      <Dependent Role="tb_usuariosXroles">
+        <PropertyRef Name="usurol_usuario_crea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERSON_tb_usuarios_PERSON_tb_usuariosXroles_usurol_usuario_modifica">
+    <End Role="tb_usuarios" Type="Self.tb_usuarios" Multiplicity="0..1" />
+    <End Role="tb_usuariosXroles" Type="Self.tb_usuariosXroles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuarios">
+        <PropertyRef Name="usu_id" />
+      </Principal>
+      <Dependent Role="tb_usuariosXroles">
+        <PropertyRef Name="usurol_usuario_modifica" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="PA_Activarciudades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ciuid" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_Activarcomunas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="comid" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_ActivarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usuid" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_Ciudades_Insertar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ciuid" Type="nvarchar" Mode="In" />
+    <Parameter Name="ciudescripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="ciuusuariocrea" Type="nvarchar" Mode="In" />
+    <Parameter Name="ciufechacrea" Type="datetime" Mode="In" />
+    <Parameter Name="ciuestado" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="PA_CiudadesUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ciuid" Type="nvarchar" Mode="In" />
+    <Parameter Name="ciudescripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="ciuusuariomodifica" Type="nvarchar" Mode="In" />
+    <Parameter Name="ciufechamodifica" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="PA_Comunas_Insertar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="comid" Type="nvarchar" Mode="In" />
+    <Parameter Name="comdescripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="comkmi" Type="nvarchar" Mode="In" />
+    <Parameter Name="comkmf" Type="datetime" Mode="In" />
+    <Parameter Name="comestado" Type="bit" Mode="In" />
+    <Parameter Name="comusuariocrea" Type="nvarchar" Mode="In" />
+    <Parameter Name="comfechacrea" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="PA_ComunasUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="comid" Type="nvarchar" Mode="In" />
+    <Parameter Name="comdescripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="comkmi" Type="nvarchar" Mode="In" />
+    <Parameter Name="comkmf" Type="datetime" Mode="In" />
+    <Parameter Name="comestado" Type="bit" Mode="In" />
+    <Parameter Name="comusuariomodifica" Type="nvarchar" Mode="In" />
+    <Parameter Name="comfechamodifica" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="PA_InactivarCiudades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ciuid" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_Inactivarcomunas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="comid" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_InactivarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usuid" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_Usario_Insertar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usuid" Type="nvarchar" Mode="In" />
+    <Parameter Name="usudescripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="usupassword" Type="nvarchar" Mode="In" />
+    <Parameter Name="usuusuariocrea" Type="nvarchar" Mode="In" />
+    <Parameter Name="usufechacrea" Type="datetime" Mode="In" />
+    <Parameter Name="usuestado" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="PA_UsuarioUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="usuid" Type="nvarchar" Mode="In" />
+    <Parameter Name="usudescripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="usupassword" Type="nvarchar" Mode="In" />
+    <Parameter Name="usuusuariocrea" Type="nvarchar" Mode="In" />
+    <Parameter Name="usufechacrea" Type="datetime" Mode="In" />
+    <Parameter Name="usuestado" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="PA_ACTIVAR_TB_ROLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GRAL">
+    <Parameter Name="id" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_ACTIVAR_TB_TRAMOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GRAL">
+    <Parameter Name="id" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_INACTIVAR_TB_ROLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GRAL">
+    <Parameter Name="id" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_INACTIVAR_TB_TRAMOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GRAL">
+    <Parameter Name="id" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_INSERT_TB_ROLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GRAL">
+    <Parameter Name="descripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="usuario_crea" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_INSERT_TB_TRAMOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GRAL">
+    <Parameter Name="descripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="km_inicio" Type="nvarchar" Mode="In" />
+    <Parameter Name="km_fin" Type="nvarchar" Mode="In" />
+    <Parameter Name="car_id" Type="nvarchar" Mode="In" />
+    <Parameter Name="usuario_crea" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_UPDATE_TB_ROLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GRAL">
+    <Parameter Name="id" Type="nvarchar" Mode="In" />
+    <Parameter Name="descripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="usuario_modifica" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_UPDATE_TB_TRAMOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GRAL">
+    <Parameter Name="id" Type="nvarchar" Mode="In" />
+    <Parameter Name="descripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="km_inicio" Type="nvarchar" Mode="In" />
+    <Parameter Name="km_fin" Type="nvarchar" Mode="In" />
+    <Parameter Name="car_id" Type="nvarchar" Mode="In" />
+    <Parameter Name="usuario_modifica" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_ACTIVARCATEGORIAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="INV">
+    <Parameter Name="Id" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_INACTIVARCATEGORIAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="INV">
+    <Parameter Name="Id" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_INSERTCATEGORIAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="INV">
+    <Parameter Name="Id" Type="nvarchar" Mode="In" />
+    <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="UsuarioCrea" Type="nvarchar" Mode="In" />
+    <Parameter Name="FechaCrea" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="PA_UPDATECATEGORIAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="INV">
+    <Parameter Name="Id" Type="nvarchar" Mode="In" />
+    <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
+    <Parameter Name="UsuarioModifica" Type="nvarchar" Mode="In" />
+    <Parameter Name="Fechamodifica" Type="datetime" Mode="In" />
+    <Parameter Name="Estado" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="PA_ACTIVAREMPLEADOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="PERSON">
+    <Parameter Name="Id" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_INACTIVAREMPLEADOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="PERSON">
+    <Parameter Name="Id" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PA_INSERTEMPLEADOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="PERSON">
+    <Parameter Name="Id" Type="nvarchar" Mode="In" />
+    <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+    <Parameter Name="Edad" Type="int" Mode="In" />
+    <Parameter Name="telefono" Type="nvarchar" Mode="In" />
+    <Parameter Name="ciu_id" Type="nvarchar" Mode="In" />
+    <Parameter Name="UsuarioCrea" Type="nvarchar" Mode="In" />
+    <Parameter Name="FechaCrea" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="PA_UPDATEEMPLEADOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="PERSON">
+    <Parameter Name="Id" Type="nvarchar" Mode="In" />
+    <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+    <Parameter Name="Edad" Type="int" Mode="In" />
+    <Parameter Name="telefono" Type="nvarchar" Mode="In" />
+    <Parameter Name="ciu_id" Type="nvarchar" Mode="In" />
+    <Parameter Name="UsuarioModifica" Type="nvarchar" Mode="In" />
+    <Parameter Name="Fechamodifica" Type="date" Mode="In" />
+    <Parameter Name="Estado" Type="bit" Mode="In" />
+  </Function>
   <EntityContainer Name="carreteras_finalModelStoreContainer">
     <EntitySet Name="tb_carreteras" EntityType="Self.tb_carreteras" Schema="GRAL" store:Type="Tables" />
     <EntitySet Name="tb_carreterasXciudades" EntityType="Self.tb_carreterasXciudades" Schema="GRAL" store:Type="Tables" />
@@ -584,7 +823,9 @@
     <EntitySet Name="tb_tramos" EntityType="Self.tb_tramos" Schema="GRAL" store:Type="Tables" />
     <EntitySet Name="tb_categorias" EntityType="Self.tb_categorias" Schema="INV" store:Type="Tables" />
     <EntitySet Name="tb_empleados" EntityType="Self.tb_empleados" Schema="PERSON" store:Type="Tables" />
+    <EntitySet Name="tb_empleadosXusuarios" EntityType="Self.tb_empleadosXusuarios" Schema="PERSON" store:Type="Tables" />
     <EntitySet Name="tb_usuarios" EntityType="Self.tb_usuarios" Schema="PERSON" store:Type="Tables" />
+    <EntitySet Name="tb_usuariosXroles" EntityType="Self.tb_usuariosXroles" Schema="PERSON" store:Type="Tables" />
     <AssociationSet Name="FK_GRAL_tb_carreteras_GRAL_tb_carreterasXciudades_car_id" Association="Self.FK_GRAL_tb_carreteras_GRAL_tb_carreterasXciudades_car_id">
       <End Role="tb_carreteras" EntitySet="tb_carreteras" />
       <End Role="tb_carreterasXciudades" EntitySet="tb_carreterasXciudades" />
@@ -621,17 +862,21 @@
       <End Role="tb_roles" EntitySet="tb_roles" />
       <End Role="tb_pantallasXroles" EntitySet="tb_pantallasXroles" />
     </AssociationSet>
-    <AssociationSet Name="FK_GRAL_tb_roles_PERSON_tb_empleados_emp_id" Association="Self.FK_GRAL_tb_roles_PERSON_tb_empleados_emp_id">
-      <End Role="tb_empleados" EntitySet="tb_empleados" />
-      <End Role="tb_usuarios" EntitySet="tb_usuarios" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GRAL_tb_roles_PERSON_tb_usuarios_rol_id" Association="Self.FK_GRAL_tb_roles_PERSON_tb_usuarios_rol_id">
+    <AssociationSet Name="FK_GRAL_tb_roles_PERSON_tb_usuariosXroles_rol_id" Association="Self.FK_GRAL_tb_roles_PERSON_tb_usuariosXroles_rol_id">
       <End Role="tb_roles" EntitySet="tb_roles" />
-      <End Role="tb_usuarios" EntitySet="tb_usuarios" />
+      <End Role="tb_usuariosXroles" EntitySet="tb_usuariosXroles" />
     </AssociationSet>
     <AssociationSet Name="FK_GRAL_tb_tramos_GRAL_tb_comunas_com_id" Association="Self.FK_GRAL_tb_tramos_GRAL_tb_comunas_com_id">
       <End Role="tb_tramos" EntitySet="tb_tramos" />
       <End Role="tb_comunas" EntitySet="tb_comunas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERSON_tb_empleados_PERSON_tb_empleadosXusuarios_emp_id" Association="Self.FK_PERSON_tb_empleados_PERSON_tb_empleadosXusuarios_emp_id">
+      <End Role="tb_empleados" EntitySet="tb_empleados" />
+      <End Role="tb_empleadosXusuarios" EntitySet="tb_empleadosXusuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERSON_tb_empleados_PERSON_tb_usuarios_usu_id" Association="Self.FK_PERSON_tb_empleados_PERSON_tb_usuarios_usu_id">
+      <End Role="tb_usuarios" EntitySet="tb_usuarios" />
+      <End Role="tb_empleadosXusuarios" EntitySet="tb_empleadosXusuarios" />
     </AssociationSet>
     <AssociationSet Name="FK_PERSON_tb_usuarios_GRAL_tb_carreteras_car_usuario_crea" Association="Self.FK_PERSON_tb_usuarios_GRAL_tb_carreteras_car_usuario_crea">
       <End Role="tb_usuarios" EntitySet="tb_usuarios" />
@@ -713,6 +958,14 @@
       <End Role="tb_usuarios" EntitySet="tb_usuarios" />
       <End Role="tb_empleados" EntitySet="tb_empleados" />
     </AssociationSet>
+    <AssociationSet Name="FK_PERSON_tb_usuarios_PERSON_tb_empleadosXusuarios_emusu_usuario_crea" Association="Self.FK_PERSON_tb_usuarios_PERSON_tb_empleadosXusuarios_emusu_usuario_crea">
+      <End Role="tb_usuarios" EntitySet="tb_usuarios" />
+      <End Role="tb_empleadosXusuarios" EntitySet="tb_empleadosXusuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERSON_tb_usuarios_PERSON_tb_empleadosXusuarios_emusu_usuario_modifica" Association="Self.FK_PERSON_tb_usuarios_PERSON_tb_empleadosXusuarios_emusu_usuario_modifica">
+      <End Role="tb_usuarios" EntitySet="tb_usuarios" />
+      <End Role="tb_empleadosXusuarios" EntitySet="tb_empleadosXusuarios" />
+    </AssociationSet>
     <AssociationSet Name="FK_PERSON_tb_usuarios_PERSON_tb_usuarios_usu_usuario_crea" Association="Self.FK_PERSON_tb_usuarios_PERSON_tb_usuarios_usu_usuario_crea">
       <End Role="tb_usuarios" EntitySet="tb_usuarios" />
       <End Role="tb_usuarios1" EntitySet="tb_usuarios" />
@@ -720,6 +973,18 @@
     <AssociationSet Name="FK_PERSON_tb_usuarios_PERSON_tb_usuarios_usu_usuario_modifica" Association="Self.FK_PERSON_tb_usuarios_PERSON_tb_usuarios_usu_usuario_modifica">
       <End Role="tb_usuarios" EntitySet="tb_usuarios" />
       <End Role="tb_usuarios1" EntitySet="tb_usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERSON_tb_usuarios_PERSON_tb_usuariosXroles_usu_id" Association="Self.FK_PERSON_tb_usuarios_PERSON_tb_usuariosXroles_usu_id">
+      <End Role="tb_usuarios" EntitySet="tb_usuarios" />
+      <End Role="tb_usuariosXroles" EntitySet="tb_usuariosXroles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERSON_tb_usuarios_PERSON_tb_usuariosXroles_usurol_usuario_crea" Association="Self.FK_PERSON_tb_usuarios_PERSON_tb_usuariosXroles_usurol_usuario_crea">
+      <End Role="tb_usuarios" EntitySet="tb_usuarios" />
+      <End Role="tb_usuariosXroles" EntitySet="tb_usuariosXroles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERSON_tb_usuarios_PERSON_tb_usuariosXroles_usurol_usuario_modifica" Association="Self.FK_PERSON_tb_usuarios_PERSON_tb_usuariosXroles_usurol_usuario_modifica">
+      <End Role="tb_usuarios" EntitySet="tb_usuarios" />
+      <End Role="tb_usuariosXroles" EntitySet="tb_usuariosXroles" />
     </AssociationSet>
   </EntityContainer>
 </Schema>
