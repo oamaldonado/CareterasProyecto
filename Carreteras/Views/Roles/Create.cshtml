@@ -11,6 +11,8 @@
 {
     @Html.AntiForgeryToken()
     
+	 <div class="ibox-content">
+
     <div class="form-horizontal">
         <h4>tb_roles</h4>
         <hr />
@@ -22,6 +24,7 @@
                 @Html.ValidationMessageFor(model => model.rol_id, "", new { @class = "text-danger" })
             </div>
         </div>
+		
 
         <div class="form-group">
             @Html.LabelFor(model => model.rol_descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -30,6 +33,7 @@
                 @Html.ValidationMessageFor(model => model.rol_descripcion, "", new { @class = "text-danger" })
             </div>
         </div>
+		
 
         <div class="form-group">
             @Html.LabelFor(model => model.rol_usuario_crea, "rol_usuario_crea", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -38,6 +42,7 @@
                 @Html.ValidationMessageFor(model => model.rol_usuario_crea, "", new { @class = "text-danger" })
             </div>
         </div>
+		
 
         <div class="form-group">
             @Html.LabelFor(model => model.rol_fecha_crea, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -46,6 +51,7 @@
                 @Html.ValidationMessageFor(model => model.rol_fecha_crea, "", new { @class = "text-danger" })
             </div>
         </div>
+		
 
         <div class="form-group">
             @Html.LabelFor(model => model.rol_usuario_modifica, "rol_usuario_modifica", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -54,6 +60,7 @@
                 @Html.ValidationMessageFor(model => model.rol_usuario_modifica, "", new { @class = "text-danger" })
             </div>
         </div>
+		
 
         <div class="form-group">
             @Html.LabelFor(model => model.rol_fecha_modifica, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -62,6 +69,7 @@
                 @Html.ValidationMessageFor(model => model.rol_fecha_modifica, "", new { @class = "text-danger" })
             </div>
         </div>
+		
 
         <div class="form-group">
             @Html.LabelFor(model => model.rol_estado, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -72,17 +80,15 @@
                 </div>
             </div>
         </div>
+		
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-10 col-md-10">
                 <input type="submit" value="Guardar" class="btn btn-success  " /> 
 				 @Html.ActionLink("Cancelar", "Index",null,new { @class = " btn btn-default" })
             </div>
         </div>
+  </div>
     </div>
 }
 
-<div>
-  
-	  
-</div>

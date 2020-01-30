@@ -15,31 +15,40 @@
 
 
  <div class="ibox-content">
+    <div class="table-responsive">
 
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+   
+   <table class="table table-striped table-bordered table-hover dataTables-example dataTable dtr-inline" id="tbl" aria-describedby="tabla_evento_info" role="grid">
+    <thead>
+	<tr>
 
-<table class="table table-bordered">
-    <tr>
         <th>
             @Html.DisplayNameFor(model => model.rol_descripcion)
         </th>
+
         <th>
             @Html.DisplayNameFor(model => model.rol_fecha_crea)
         </th>
+
         <th>
             @Html.DisplayNameFor(model => model.rol_fecha_modifica)
         </th>
+
         <th>
             @Html.DisplayNameFor(model => model.rol_estado)
         </th>
+
         <th>
             @Html.DisplayNameFor(model => model.tb_usuarios.usu_descripcion)
         </th>
+
         <th>
             @Html.DisplayNameFor(model => model.tb_usuarios1.usu_descripcion)
         </th>
         <th>Accion</th>
     </tr>
-
+	</thead>
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -72,6 +81,8 @@
 
 
 
+ </div>
+ </div>
  </div>
 
 
